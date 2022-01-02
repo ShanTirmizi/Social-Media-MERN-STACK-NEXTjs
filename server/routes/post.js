@@ -13,15 +13,20 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  console.log(req.body, 'post');
+
   const post = new Post({
     title: req.body.title,
     description: req.body.description,
+    userID: req.body.userID,
   });
-  console.log(post);
+  // console.log(post);
   try {
     const savedPost = await post.save();
     res.json(savedPost);
-  } catch (error) {}
+  } catch (error) {
+    res.json(error);
+  }
   //   post
   //     .save()
   //     .then((data) => {
@@ -30,7 +35,6 @@ router.post('/', async (req, res) => {
   //     .catch((err) => {
   //       res.json(err);
   //     });
-  res.json(error);
 });
 
 //Specific Post
