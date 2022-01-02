@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0';
 
 export default function App() {
+  const { user } = useUser();
+  console.log(user);
   const [data, setData] = useState([]);
   const [userPost, setUserPost] = useState({
     title: '',
@@ -34,6 +38,27 @@ export default function App() {
   };
   return (
     <>
+      <h1>Posts</h1>
+      {/* {user ? (
+        <Link href="/api/auth/logout">
+          <button>logout</button>
+        </Link>
+      ) : (
+        <Link href="/api/auth/login">
+          <button>login</button>
+        </Link>
+      )} */}
+      {user && (
+        <Link href="/api/auth/logout">
+          <button>logout</button>
+        </Link>
+      )}
+      {!user && (
+        <Link href="/api/auth/login">
+          <button>login</button>
+        </Link>
+      )}
+
       <input
         type="text"
         onChange={(e) => {
