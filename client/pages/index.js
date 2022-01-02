@@ -10,16 +10,18 @@ export default function App() {
   const [userPost, setUserPost] = useState({
     title: '',
     description: '',
+    userID: null,
   });
+  // console.log(userPost);
   useEffect(() => {
     axios.get('http://localhost:8000/posts').then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setData(res.data);
     });
   }, []);
   useEffect(() => {
     axios.get('http://localhost:8000/posts').then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setData(res.data);
     });
   }, [data]);
@@ -34,6 +36,7 @@ export default function App() {
     axios.post('http://localhost:8000/posts', {
       title: userPost.title,
       description: userPost.description,
+      userID: userPost.userID,
     });
   };
   return (
@@ -58,25 +61,30 @@ export default function App() {
           <button>login</button>
         </Link>
       )}
+      {user && (
+        <>
+          <input
+            type="text"
+            onChange={(e) => {
+              setUserPost({
+                ...userPost,
+                title: e.target.value,
+                userID: user,
+              });
+            }}
+          />
+          <input
+            type="text"
+            onChange={(e) => {
+              setUserPost({
+                ...userPost,
+                description: e.target.value,
+              });
+            }}
+          />
+        </>
+      )}
 
-      <input
-        type="text"
-        onChange={(e) => {
-          setUserPost({
-            ...userPost,
-            title: e.target.value,
-          });
-        }}
-      />
-      <input
-        type="text"
-        onChange={(e) => {
-          setUserPost({
-            ...userPost,
-            description: e.target.value,
-          });
-        }}
-      />
       <button onClick={handleClick}>Submit</button>
       {data.map((item) => {
         return (
