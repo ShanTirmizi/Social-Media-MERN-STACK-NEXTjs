@@ -83,7 +83,9 @@ router.post('/:Id/comments', async (req, res) => {
   // saving the comment
   try {
     await comment.save();
+    console.log(comment);
     const postRelated = await Post.findById(id);
+    console.log(postRelated);
     postRelated.comments.push(comment);
     await postRelated.save();
     res.json(comment);
