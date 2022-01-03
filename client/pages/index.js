@@ -18,6 +18,10 @@ export default function App() {
     userID: null,
     post: null,
   });
+  const [userLikes, setUserLikes] = useState({
+    userID: null,
+    post: null,
+  });
   useEffect(() => {
     axios.get('http://localhost:8000/posts').then((res) => {
       console.log(res.data);
@@ -43,6 +47,21 @@ export default function App() {
       userID: userComment.userID,
       post: userComment.post,
     });
+  };
+  // Added like to a post
+  const postLikes = async (id) => {
+    await axios.post(`http://localhost:8000/posts/${id}/likes`, {
+      userID: userLikes.userID,
+      post: userLikes.post,
+    });
+  };
+  const postLikesBefore = (id) => {
+    setUserLikes({
+      userID: user,
+      post: id,
+    });
+    postLikes(id);
+    // console.log(userLikes);
   };
   return (
     <>
@@ -70,6 +89,9 @@ export default function App() {
         userComment={userComment}
         user={user}
         postComment={postComment}
+        postLikesBefore={postLikesBefore}
+        setUserLikes={setUserLikes}
+        userLikes={userLikes}
       />
     </>
   );

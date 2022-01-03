@@ -1,7 +1,17 @@
 import React from 'react';
 import Comment from './Comments/comment';
+import Like from './Likes/like';
 
-const Posts = ({ data, setUserComment, userComment, user, postComment }) => {
+const Posts = ({
+  data,
+  setUserComment,
+  userComment,
+  user,
+  postComment,
+  postLikesBefore,
+  userLikes,
+  setUserLikes,
+}) => {
   return (
     <>
       {data.map((item) => {
@@ -19,6 +29,13 @@ const Posts = ({ data, setUserComment, userComment, user, postComment }) => {
                   post: item._id,
                 });
               }}
+            />
+            {/* <h1>{item.likesCount}</h1> */}
+            <Like
+              item={item}
+              postLikesBefore={postLikesBefore}
+              setUserLikes={setUserLikes}
+              userLikes={userLikes}
             />
 
             <Comment postComment={postComment} item={item} />
