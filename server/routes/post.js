@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const Like = require('../models/Like');
 
 router.get('/', async (req, res) => {
   //   res.send('Posts');
@@ -107,6 +108,41 @@ router.get('/:Id/comments', async (req, res) => {
   } catch (error) {
     res.json(error);
   }
+});
+
+// Add like to the post
+router.post('/:Id/likes', async (req, res) => {
+  const id = req.params.Id;
+  // likes function
+  // console.log(user, 'like');
+  const like = new Like({
+    userID: req.body.userID,
+    post: id,
+    like: true,
+  });
+  // console.log(like, 'likeeeees');
+
+  try {
+    like.save();
+    const postRelated = await Post.findById(id);
+    postRelated.likes.push(like);
+    // increment likes
+    postRelated.likesCount = postRelated.likesCount + 1;
+    // postRelated.likesCount();
+    await postRelated.save();
+    res.json(postRelated);
+  } catch (error) {
+    res.json(error);
+  }
+
+  // try {
+  //   const postRelated = await Post.findById(id);
+  //   postRelated.likes.push(req.body.userID);
+  //   await postRelated.save();
+  //   res.json(postRelated);
+  // } catch (error) {
+  //   res.json(error);
+  // }
 });
 
 module.exports = router;

@@ -18,6 +18,27 @@ const PostSchema = mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    // like count
+    likesCount: {
+      type: Number,
+      default: 0,
+    },
+    // add likes
+
+    likes: [
+      {
+        // userID: {
+        //   type: Object,
+        //   required: true,
+        // },
+        // like: {
+        //   type: Boolean,
+        //   required: true,
+        // },
+        type: Object,
+        ref: 'Like',
+      },
+    ],
     comments: [
       {
         type: Object,
