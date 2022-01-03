@@ -5,7 +5,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 export default function App() {
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
   const [data, setData] = useState([]);
   const [userPost, setUserPost] = useState({
     title: '',
@@ -15,7 +15,7 @@ export default function App() {
   // console.log(userPost);
   useEffect(() => {
     axios.get('http://localhost:8000/posts').then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       setData(res.data);
     });
   }, []);
@@ -91,6 +91,10 @@ export default function App() {
           <div key={item.id}>
             <h1>{item.title}</h1>
             <p>{item.description}</p>
+            {item.comments.map((comment) => {
+              return <p key={comment.id}> comment = {comment.text}</p>;
+            })}
+            {/* <p>{item.}</p> */}
           </div>
         );
       })}
