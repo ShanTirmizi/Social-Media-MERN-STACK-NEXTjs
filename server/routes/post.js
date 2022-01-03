@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 router.get('/', async (req, res) => {
   //   res.send('Posts');
@@ -66,6 +67,40 @@ router.patch('/:Id', async (req, res) => {
       { $set: { title: req.body.title } }
     );
     res.json(updatedPost);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Post Comments
+router.post('/:Id/comments', async (req, res) => {
+  // Get the post we are commenting on#
+  const id = req.params.Id;
+  const comment = new Comment({
+    text: req.body.text,
+    post: id,
+  });
+  // saving the comment
+  try {
+    await comment.save();
+    const postRelated = await Post.findById(id);
+    postRelated.comments.push(comment);
+    await postRelated.save();
+    res.json(comment);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+});
+
+// Get Comments
+router.get('/:Id/comments', async (req, res) => {
+  const id = req.params.Id;
+  try {
+    // const postRelated = await Post.findById(id);
+    const comments = await Comment.find({ post: id });
+    res.json(comments);
+    // res.json(postRelated.comments);
   } catch (error) {
     res.json(error);
   }
