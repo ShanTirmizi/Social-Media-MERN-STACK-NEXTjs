@@ -12,7 +12,7 @@ const PostSchema = mongoose.Schema(
     },
     userID: {
       type: Object,
-      required: true,
+      // required: true,
     },
     date: {
       type: Date,

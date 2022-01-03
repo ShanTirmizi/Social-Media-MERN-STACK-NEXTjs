@@ -78,6 +78,7 @@ router.post('/:Id/comments', async (req, res) => {
   const id = req.params.Id;
   const comment = new Comment({
     text: req.body.text,
+    userID: req.body.userID,
     post: id,
   });
   // saving the comment

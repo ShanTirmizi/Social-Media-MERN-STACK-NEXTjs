@@ -12,6 +12,12 @@ export default function App() {
     description: '',
     userID: null,
   });
+  const [userComment, setUserComment] = useState({
+    text: '',
+    userID: null,
+    // date: null,
+    post: null,
+  });
   // console.log(userPost);
   useEffect(() => {
     axios.get('http://localhost:8000/posts').then((res) => {
@@ -37,6 +43,13 @@ export default function App() {
       title: userPost.title,
       description: userPost.description,
       userID: userPost.userID,
+    });
+  };
+  const postComment = async (id) => {
+    await axios.post(`http://localhost:8000/posts/${id}/comments`, {
+      text: userComment.text,
+      userID: userComment.userID,
+      post: userComment.post,
     });
   };
   return (
@@ -88,11 +101,28 @@ export default function App() {
       <button onClick={handleClick}>Submit</button>
       {data.map((item) => {
         return (
-          <div key={item.id}>
+          <div key={item._id}>
             <h1>{item.title}</h1>
             <p>{item.description}</p>
+            <input
+              type="text"
+              onChange={(e) => {
+                setUserComment({
+                  ...userComment,
+                  text: e.target.value,
+                  userID: user,
+                  post: item._id,
+                });
+              }}
+            />
+            <button onClick={() => postComment(item._id)}> comment</button>
             {item.comments.map((comment) => {
-              return <p key={comment.id}> comment = {comment.text}</p>;
+              console.log(comment);
+              return (
+                <>
+                  <p key={comment._id}> comment = {comment.text}</p>
+                </>
+              );
             })}
             {/* <p>{item.}</p> */}
           </div>
