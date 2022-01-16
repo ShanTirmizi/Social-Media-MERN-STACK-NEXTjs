@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Comment = ({ postComment, item }) => {
-  // console.log(item.userID, 'item');
+  console.log(item.userID, 'item');
   return (
     <>
       <button onClick={() => postComment(item._id)}> comment</button>
@@ -10,7 +10,7 @@ const Comment = ({ postComment, item }) => {
         return (
           <>
             <p key={comment._id}>
-              {item.userID.nickname} === {comment.text}
+              {comment.userID.nickname} === {comment.text}
             </p>
           </>
         );
