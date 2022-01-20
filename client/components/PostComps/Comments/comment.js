@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Comment = ({ postComment, item }) => {
+const Comment = ({ user, postComment, item }) => {
   console.log(item.userID, 'item');
   return (
     <>
-      <button onClick={() => postComment(item._id)}> comment</button>
+      {user && <button onClick={() => postComment(item._id)}> comment</button>}
+
       {item.comments.map((comment) => {
         // console.log(comment);
         return (

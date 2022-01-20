@@ -19,26 +19,31 @@ const Posts = ({
           <div key={item._id}>
             <h1>{item.title}</h1>
             <p>{item.description}</p>
-            <input
-              type="text"
-              onChange={(e) => {
-                setUserComment({
-                  ...userComment,
-                  text: e.target.value,
-                  userID: user,
-                  post: item._id,
-                });
-              }}
-            />
-            {/* <h1>{item.likesCount}</h1> */}
-            <Like
-              item={item}
-              postLikesBefore={postLikesBefore}
-              setUserLikes={setUserLikes}
-              userLikes={userLikes}
-            />
+            {user && (
+              <input
+                type="text"
+                onChange={(e) => {
+                  setUserComment({
+                    ...userComment,
+                    text: e.target.value,
+                    userID: user,
+                    post: item._id,
+                  });
+                }}
+              />
+            )}
 
-            <Comment postComment={postComment} item={item} />
+            {/* <h1>{item.likesCount}</h1> */}
+            {user && (
+              <Like
+                item={item}
+                postLikesBefore={postLikesBefore}
+                setUserLikes={setUserLikes}
+                userLikes={userLikes}
+              />
+            )}
+
+            <Comment user={user} postComment={postComment} item={item} />
           </div>
         );
       })}
