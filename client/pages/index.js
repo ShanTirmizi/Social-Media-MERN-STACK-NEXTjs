@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0';
 import Posting from '../components/PostComps/posting';
 import Posts from '../components/PostComps/posts';
+// import styles
+import styles from '../styles/homepage.module.css';
 
 export default function App() {
   const { user } = useUser();
@@ -65,34 +67,36 @@ export default function App() {
   };
   return (
     <>
-      <h1>Posts</h1>
-      {user && (
-        <Link href="/api/auth/logout">
-          <button>logout</button>
-        </Link>
-      )}
-      {!user && (
-        <Link href="/api/auth/login">
-          <button>login</button>
-        </Link>
-      )}
-      <Posting
-        setUserPost={setUserPost}
-        userPost={userPost}
-        handleClick={handleClick}
-        user={user}
-      />
+      <div className={styles.container}>
+        <h1>Posts</h1>
+        {user && (
+          <Link href="/api/auth/logout">
+            <button>logout</button>
+          </Link>
+        )}
+        {!user && (
+          <Link href="/api/auth/login">
+            <button>login</button>
+          </Link>
+        )}
+        <Posting
+          setUserPost={setUserPost}
+          userPost={userPost}
+          handleClick={handleClick}
+          user={user}
+        />
 
-      <Posts
-        data={data}
-        setUserComment={setUserComment}
-        userComment={userComment}
-        user={user}
-        postComment={postComment}
-        postLikesBefore={postLikesBefore}
-        setUserLikes={setUserLikes}
-        userLikes={userLikes}
-      />
+        <Posts
+          data={data}
+          setUserComment={setUserComment}
+          userComment={userComment}
+          user={user}
+          postComment={postComment}
+          postLikesBefore={postLikesBefore}
+          setUserLikes={setUserLikes}
+          userLikes={userLikes}
+        />
+      </div>
     </>
   );
 }
