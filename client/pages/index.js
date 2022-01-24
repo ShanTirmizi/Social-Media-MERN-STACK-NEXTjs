@@ -66,8 +66,8 @@ export default function App() {
     // console.log(userLikes);
   };
   return (
-    <>
-      <div className={styles.container}>
+    <div className={styles.container}>
+      <div>
         <h1>Posts</h1>
         {user && (
           <Link href="/api/auth/logout">
@@ -97,6 +97,6 @@ export default function App() {
           userLikes={userLikes}
         />
       </div>
-    </>
+    </div>
   );
 }
